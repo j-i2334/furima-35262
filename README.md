@@ -15,6 +15,7 @@
 
 ### Association
 - has_many :item
+- has_one :purchase record
 
 ## items テーブル
 
@@ -22,13 +23,12 @@
 | ------ | ------ | ----------- |
 | name  | string | null: false   |
 | description  | text | null: false   |
-| details  | text | null: false   |
 | price  | integer | null: false   |
-| product condition  | string | null: false   |
-| shipping charges   | string | null: false   |
-| shipping area   | string | null: false   |
-| days to ship    | string | null: false   |
-| category        | string | null: false   |
+| product condition_id  | integer | null: false   |
+| shipping charges_id   | integer | null: false   |
+| shipping area_id   | integer | null: false   |
+| days to ship_id    | integer | null: false   |
+| category_id       | integer | null: false   |
 | user  | references | null: false, foreign_key: true  |
 
 ### Association
@@ -44,6 +44,7 @@
 | item  | references   | null: false, foreign_key: true       |
 
 ### Association
+- belongs_to :user
 - belongs_to :item
 - has_one :destination
 
@@ -58,8 +59,8 @@
 | address  | string | null: false   |
 | building name  | string |    |
 | phone number  | string | null: false   |
-| user  | references   | null: false, foreign_key: true      |
-| item  | references   | null: false, foreign_key: true       |
+| purchase record  | references   | null: false, foreign_key: true      |
+
 
 ### Association
 - belongs_to :purchase record
