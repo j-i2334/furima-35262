@@ -10,12 +10,6 @@ RSpec.describe User, type: :model do
       it "全ての項目の入力が存在すれば登録できること" do
         expect(@user).to be_valid
       end
-
-      # it "passwordが6文字以上であれば登録できる" do
-      #   @user.password = "000000"
-      #   @user.password_confirmation = "000000"
-      #   expect(@user).to be_valid
-      # end
     end
     context '新規登録できないこと' do
       it 'nicknameが空では登録できないこと' do
