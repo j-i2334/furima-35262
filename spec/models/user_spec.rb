@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
   describe 'ユーザー新規登録' do
     context '新規登録できること' do
       it 'passwordが6文字以上であれば登録できること' do
-        @user.password = '000000'
+        @user.password = '000aaa'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
@@ -41,7 +41,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'passwordが半角英数字混合でなければ登録できないこと' do
-        @user.password = '000000'
+        @user.password = 'あいうABC'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
