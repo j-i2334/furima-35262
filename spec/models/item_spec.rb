@@ -63,10 +63,22 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Price is too short (minimum is 3 characters)")
       end
 
-      it '販売価格が¥300〜¥9,999,999の間でなければ出品できない' do
-        @item.price = 10,000,0000
+      it '販売価格が半角英数混合だと出品できない' do
+        @item.price = "123abc"
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is too short (minimum is 3 characters)")
+        expect(@item.errors.full_messages).to include("Price is not a number")
+      end
+
+      it '販売価格が半角英語だけでは出品できない' do
+        @item.price = "abcd"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number")
+      end
+
+      it '販売価格が¥300〜¥9,999,999の間でなければ出品できない' do
+        @item.price = 10000000
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be less than 10000000")
       end
 
       it '販売価格が¥299以下では出品できない' do
