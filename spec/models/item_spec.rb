@@ -64,13 +64,13 @@ RSpec.describe Item, type: :model do
       end
 
       it '販売価格が¥300〜¥9,999,999の間でなければ出品できない' do
-        @item.price = "10,000,0000"
+        @item.price = 10,000,0000
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is too short (minimum is 3 characters)")
       end
 
       it '販売価格が¥299以下では出品できない' do
-        @item.price = "299"
+        @item.price = 299
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be greater than 300")
       end
