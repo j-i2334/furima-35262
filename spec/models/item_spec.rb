@@ -43,9 +43,9 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Shipping charges must be other than 1")
       end
       it '発送元の地域が未選択だと出品できない' do
-        @item.shipping_area_id = 0
+        @item.shipping_area_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping area must be other than 0")
+        expect(@item.errors.full_messages).to include("Shipping area must be other than 1")
       end
       it '発送までの日数が未選択だと出品できない' do
         @item.days_to_ship_id = 1
@@ -67,6 +67,12 @@ RSpec.describe Item, type: :model do
         @item.price = "10,000,0000"
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is too short (minimum is 3 characters)")
+      end
+
+      it '販売価格が¥299以下では出品できない' do
+        @item.price = "299"
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be greater than 300")
       end
     end
   end

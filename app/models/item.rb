@@ -14,15 +14,17 @@ class Item < ApplicationRecord
     validates :image
   end
 
+  with_options numericality: { other_than: 1 } do
+    validates :product_condition_id
+    validates :shipping_charges_id
+    validates :shipping_area_id
+    validates :days_to_ship_id
+    validates :category_id
+  end
+
   validates  :price,  presence: true, format: {with: VALID_PRICEL_HALF},length: {minimum: 3, maxinum: 7},numericality: { only_integer: true,
     greater_than: 300, less_than: 10000000
     }
-
-  validates :product_condition_id, numericality: { other_than: 1 }
-  validates :shipping_charges_id, numericality: { other_than: 1 }
-  validates :shipping_area_id, numericality: { other_than: 0 }
-  validates :days_to_ship_id, numericality: { other_than: 1 }
-  validates :category_id, numericality: { other_than: 1 }
 
   belongs_to :user
   # has_one :purchase_record
