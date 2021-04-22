@@ -8,7 +8,7 @@ class User < ApplicationRecord
       validates :birthday
   end
 
-  validates :password, :password_confirmation, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{7,}\z/ }
+  validates :password, :password_confirmation, format: { with: /\A(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}\z/ }
 
   with_options presence: true, format: {  with: /\A[ぁ-んァ-ン一-龥々]+\z/ } do
       validates :first_name
