@@ -38,7 +38,7 @@ class PurchaseRecordsController < ApplicationController
 
    def set_item
     @item = Item.find(params[:item_id])
-    if current_user == @item.user
+    if current_user == @item.user 
        redirect_to root_path
     end
   end
