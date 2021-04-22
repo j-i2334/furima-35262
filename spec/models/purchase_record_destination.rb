@@ -10,7 +10,12 @@ RSpec.describe PurchaseRecordDestination, type: :model do
 
   describe '購入内容の入力' do
     context '購入出来る時' do
-      it '全ての値が正しく入力されていれば購入できること' do
+      it '内容に問題ない場合は購入できること' do
+        expect(@purchase_record_destination).to be_valid
+      end
+
+      it '建物名が空でも購入できること' do
+        @purchase_record_destination.building_name = ''
         expect(@purchase_record_destination).to be_valid
       end
     end
@@ -52,7 +57,13 @@ RSpec.describe PurchaseRecordDestination, type: :model do
         expect(@purchase_record_destination.errors.full_messages).to include("Phone number can't be blank")
       end
       it '電話番号は11桁以内の数字でないと購入できない' do
-        @purchase_record_destination.phone_number = '12345あいうえおabcd'
+        @purchase_record_destination.phone_number = '012345678901'
+        @purchase_record_destination.valid?
+        expect(@purchase_record_destination.errors.full_messages).to include("Phone number is invalid.")
+      end
+      it '電話番号は11桁以内の数字以外が混じった場合では購入できない' do
+        @purchase_record_destination.phone_number = 'ab赤青あいうえお12'
+        @purchase_record_destination.valid?
         @purchase_record_destination.valid?
         expect(@purchase_record_destination.errors.full_messages).to include("Phone number is invalid.")
       end
@@ -60,6 +71,16 @@ RSpec.describe PurchaseRecordDestination, type: :model do
         @purchase_record_destination.token = ''
         @purchase_record_destination.valid?
         expect(@purchase_record_destination.errors.full_messages).to include("Token can't be blank")
+      end
+      it "user_idが無い場合は購入できないこと" do
+        @purchase_record_destination.user_id = nil
+        @purchase_record_destination.valid?
+        expect(@purchase_record_destination.errors.full_messages).to include("User can't be blank")
+      end
+      it "item_idが無い場合は購入できないこと" do
+        @purchase_record_destination.item_id = nil
+        @purchase_record_destination.valid?
+        expect(@purchase_record_destination.errors.full_messages).to include("Item can't be blank")
       end
     end
   end

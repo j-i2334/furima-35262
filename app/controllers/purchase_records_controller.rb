@@ -1,7 +1,7 @@
 class PurchaseRecordsController < ApplicationController
-  before_action :authenticate_user!, only: [:index]
-  before_action :set_item, only: [:index, :create, :sold_out_item]
-  before_action :sold_out_item, only: [:index]
+  before_action :authenticate_user!
+  before_action :set_item
+  before_action :sold_out_item
 
   def index
     @purchase_record_destination = PurchaseRecordDestination.new
@@ -12,6 +12,9 @@ class PurchaseRecordsController < ApplicationController
   
   def create
     @purchase_record_destination = PurchaseRecordDestination.new(purchase_record_params)
+    if current_user == @item.user
+      redirect_to root_path
+    end
     if @purchase_record_destination.valid?
       pay_item
       @purchase_record_destination.save
