@@ -5,16 +5,10 @@ class PurchaseRecordsController < ApplicationController
 
   def index
     @purchase_record_destination = PurchaseRecordDestination.new
-    if current_user == @item.user
-       redirect_to root_path
-    end
   end
   
   def create
     @purchase_record_destination = PurchaseRecordDestination.new(purchase_record_params)
-    if current_user == @item.user
-      redirect_to root_path
-    end
     if @purchase_record_destination.valid?
       pay_item
       @purchase_record_destination.save
@@ -44,6 +38,9 @@ class PurchaseRecordsController < ApplicationController
 
    def set_item
     @item = Item.find(params[:item_id])
+    if current_user == @item.user
+       redirect_to root_path
+    end
   end
 end
 
